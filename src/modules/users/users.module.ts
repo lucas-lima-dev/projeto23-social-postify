@@ -9,7 +9,6 @@ import { CreateUserService } from './useCases/create/create-user.service';
 @Module({
   controllers: [CreateUserController],
   providers: [
-    PrismaService,
     {
       provide: UserRepository,
       useClass: PrismaUserRepository,

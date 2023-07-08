@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   HttpException,
   HttpStatus,
   Post,
@@ -14,9 +13,9 @@ export class CreateUserController {
   constructor(private readonly createUserService: CreateUserService) {}
 
   @Post()
-  async handle(@Body() body: CreateUserDto): Promise<void> {
+  async addUser(@Body() body: CreateUserDto) {
     try {
-      await this.createUserService.execute(body);
+      return await this.createUserService.addUser(body);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.CONFLICT);
     }

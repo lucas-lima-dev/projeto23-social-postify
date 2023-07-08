@@ -8,17 +8,17 @@ import * as bcrypt from 'bcrypt';
 export class CreateUserService {
   constructor(private userRepository: UserRepository) {}
 
-  async execute(data: CreateUserDto): Promise<void> {
-    const passwordHash = await bcrypt.hash(data.password, 10);
+  async addUser(body: CreateUserDto) {
+    const passwordHash = await bcrypt.hash(body.password, 10);
     const userAlreadyExists: User = await this.userRepository.findByEmail(
-      data.email,
+      body.email,
     );
     if (userAlreadyExists) {
       throw new HttpException('Email already exists', HttpStatus.CONFLICT);
     }
 
-    await this.userRepository.create({
-      ...data,
+    return await this.userRepository.addUser({
+      ...body,
       password: passwordHash,
     });
   }
