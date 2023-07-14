@@ -11,6 +11,7 @@ import { UserRepository } from 'src/modules/users/repositories/user.repository';
   imports: [
     JwtModule.register({
       secret: process.env.JWT_SECRET,
+      global: true,
     }),
   ],
   controllers: [AuthController],

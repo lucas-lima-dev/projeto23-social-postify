@@ -9,6 +9,7 @@ import {
 import { CreatePublicationsService } from './create-publications.service';
 import { CreatePuplicationDto } from '../../dto/create-publication.dto';
 import { AuthGuard } from 'src/auth/guards/auth.guard';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 
 @Controller('publications')
 export class CreatePublicationsController {
@@ -18,9 +19,12 @@ export class CreatePublicationsController {
 
   @UseGuards(AuthGuard)
   @Post()
-  async addPublication(@Body() body: CreatePuplicationDto): Promise<void> {
+  async addPublication(
+    @Body() body: CreatePuplicationDto,
+    @CurrentUser() currentUser: any,
+  ): Promise<void> {
     try {
-      await this.publicationsService.create(body);
+      await this.publicationsService.create(body, currentUser);
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.CONFLICT);
     }

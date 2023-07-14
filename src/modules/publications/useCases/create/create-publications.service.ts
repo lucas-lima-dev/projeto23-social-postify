@@ -7,7 +7,7 @@ import { Publication } from '@prisma/client';
 export class CreatePublicationsService {
   constructor(private publicationRepository: PublicationRepository) {}
 
-  async create(data: CreatePuplicationDto): Promise<void> {
+  async create(data: CreatePuplicationDto, currentUser): Promise<void> {
     const publicationAlreadyExists: Publication =
       await this.publicationRepository.findByTitle(data.title);
 
@@ -17,6 +17,10 @@ export class CreatePublicationsService {
         HttpStatus.CONFLICT,
       );
     }
-    await this.publicationRepository.create(data);
+    const publicationData = {
+      ...data,
+      user_id: currentUser.id,
+    };
+    await this.publicationRepository.create(publicationData);
   }
 }

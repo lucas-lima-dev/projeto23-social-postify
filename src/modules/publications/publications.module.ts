@@ -8,6 +8,8 @@ import { CreateUserService } from '../users/useCases/create/create-user.service'
 import { JwtModule } from '@nestjs/jwt';
 import { UserRepository } from '../users/repositories/user.repository';
 import { PrismaUserRepository } from '../users/repositories/implementations/prisma-user.repository';
+import { FindPublicationsByUserController } from './useCases/findByUser/findByUser-publication.controller';
+import { FindPublicationsByUserService } from './useCases/findByUser/findByUser-publication.service';
 
 @Module({
   imports: [
@@ -15,7 +17,7 @@ import { PrismaUserRepository } from '../users/repositories/implementations/pris
       secret: process.env.JWT_SECRET,
     }),
   ],
-  controllers: [CreatePublicationsController],
+  controllers: [CreatePublicationsController, FindPublicationsByUserController],
   providers: [
     {
       provide: UserRepository,
@@ -23,6 +25,7 @@ import { PrismaUserRepository } from '../users/repositories/implementations/pris
     },
     { provide: PublicationRepository, useClass: PrismaPublicationRepository },
     CreatePublicationsService,
+    FindPublicationsByUserService,
     AuthService,
     CreateUserService,
     PrismaUserRepository,

@@ -1,4 +1,4 @@
-import { IsBoolean, IsDate, IsNotEmpty, IsString } from 'class-validator';
+import { IsBoolean, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreatePuplicationDto {
   @IsNotEmpty()
@@ -16,7 +16,7 @@ export class CreatePuplicationDto {
   @IsNotEmpty()
   // @IsDate() // falta colocar no formato'YYYY-MM-DD'
   @IsString()
-  dateToPublish: Date;
+  dateToPublish: string;
 
   @IsNotEmpty()
   @IsBoolean()
